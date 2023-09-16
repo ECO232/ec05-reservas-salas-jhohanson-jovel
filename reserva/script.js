@@ -1,11 +1,9 @@
-const e = require("express");
-
 const apiUrlGet = "http://127.0.0.1:3000/salas";
 const apiUrlPut = "http://127.0.0.1:3000/salas/"
 
 async function fetchItems() {
     try{
-        const response = await fecth(apiUrlGet)
+        const response = await fetch(apiUrlGet);
         if (!response.ok) {
             throw new error(`HTTP error : Status: ${response.status}`)
         }
@@ -13,7 +11,7 @@ async function fetchItems() {
         return items; 
     }catch(e){
         console.log("Error fetching items: ", e);
-        return;
+        return ;
     }
 }
 
@@ -22,6 +20,7 @@ let data = null;
 async function renderSalas() {
     data = await fetchItems(); 
 
+    console.log(data);
     let infoDiv = document.getElementById("infoDiv");
     data.salas.forEach(e => {
         let cardInfo = document.createElement('section'); 
@@ -71,6 +70,17 @@ async function renderSalas() {
         infoDiv.appendChild(card)
 
     }); 
+}
+
+function salaReservada(name, start){
+    let inputName = document.getElementById('inputName').value
+    let inputId = document.getElementById('inputId').value
+    if(inputName == "" || inputId == ""){
+        alert("Uno de los campos está vacio como yo")
+        return
+    }
+    let hora = start
+    alert(`El usuario llamado ${inputName} con identificación ${inputId} ha hecho una reserva de la sala ${name} con una hora de inicio de ${start}`) 
 }
 
 renderSalas()
